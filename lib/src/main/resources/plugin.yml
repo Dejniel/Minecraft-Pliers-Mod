@@ -1,0 +1,5 @@
+name: PliersMod
+version: "1.0"
+main: pl.wtrymiga.pliers.PliersMod
+api: "1.21"
+api-version: "1.21"
