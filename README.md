@@ -57,6 +57,11 @@ To build and deploy the mod:
    mv lib/build/libs/*.jar /path/to/server/data/plugins/
    ```
 
+## External Link
+
+For more information and downloads, visit the mod's official page:
+[Hangar Project Page](https://hangar.papermc.io/Dejniel/Pliers)
+
 ---
 
 Have fun exploring Minecraft with the legendary chicken-milking pliers!
