@@ -28,7 +28,7 @@ Sure, using Forge would have been easier and faster (since it simplifies adding 
 
 - **Entity Interactions:**
 
-  - **Chickens:** Drop 3-5 eggs when "milked."
+  - **You can milk any animal.** Chickens drop 3-5 eggs.
 
 ## Technical Details
 
