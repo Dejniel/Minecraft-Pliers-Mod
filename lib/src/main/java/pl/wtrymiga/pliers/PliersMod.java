@@ -1,6 +1,8 @@
 package pl.wtrymiga.pliers;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -62,7 +64,7 @@ public class PliersMod extends JavaPlugin implements Listener {
 
 	private void createRecipes() {
 		ItemStack customShears = new ItemStack(PRE_MATERIAL);
-		
+
 		ItemMeta meta = customShears.getItemMeta();
 		meta.setItemModel(NamespacedKey.minecraft("shears"));
 		meta.displayName(DEFAULT_NAME);
@@ -111,38 +113,41 @@ public class PliersMod extends JavaPlugin implements Listener {
 	}
 
 	private boolean performPliersAction(Entity entity) {
+		Random r = ThreadLocalRandom.current();
 		switch (entity) {
-		case Chicken chicken -> entity.getWorld().dropItemNaturally(chicken.getLocation(),
-				new ItemStack(Material.EGG, 3 + (int) (Math.random() * 3)));
-		case Cow cow -> cow.getWorld().dropItemNaturally(cow.getLocation(),
-				new ItemStack(Material.LEATHER, 1 + (int) (Math.random() * 1.2)));
-		case Sheep sheep -> sheep.getWorld().dropItemNaturally(sheep.getLocation(),
-				new ItemStack(Material.COOKIE, 1 + (int) (Math.random() * 1.5)));
-		case Pig pig -> {
-			pig.getWorld().dropItemNaturally(pig.getLocation(),
-					new ItemStack(Material.CARROT, 1 + (int) (Math.random() * 1.5)));
-			pig.getWorld().dropItemNaturally(pig.getLocation(),
-					new ItemStack(Material.POTATO, (int) (Math.random() * 3)));
-			pig.getWorld().dropItemNaturally(pig.getLocation(),
-					new ItemStack(Material.BEETROOT, (int) (Math.random() * 3)));
+		case Chicken e ->
+			e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.EGG, 3 + r.nextInt(3)));
+		case Cow e -> e.getWorld().dropItemNaturally(e.getLocation(),
+				new ItemStack(Material.LEATHER, 1 + (r.nextInt(100) < 20 ? 1 : 0)));
+		case Sheep e -> e.getWorld().dropItemNaturally(e.getLocation(),
+				new ItemStack(Material.COOKIE, 1 + (r.nextInt(100) < 33 ? 1 : 0)));
+		case Pig e -> {
+			e.getWorld().dropItemNaturally(e.getLocation(),
+					new ItemStack(Material.CARROT, 1 + (r.nextInt(100) < 33 ? 1 : 0)));
+			e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.POTATO, r.nextInt(1)));
+			e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.BEETROOT, r.nextInt(1)));
 		}
-		case Wolf wolf -> wolf.getWorld().dropItemNaturally(wolf.getLocation(),
-				new ItemStack(Material.BONE_MEAL, 2 + (int) (Math.random() * 5)));
-		case Donkey donkey -> donkey.getWorld().dropItemNaturally(donkey.getLocation(), new ItemStack(Material.CHEST));
-
-		case Llama llama ->
-			llama.getWorld().dropItemNaturally(llama.getLocation(), new ItemStack(Material.WHITE_CARPET));
-		case Zombie zombie -> {
-			zombie.getWorld().dropItemNaturally(zombie.getLocation(), new ItemStack(Material.ROTTEN_FLESH, 1));
-
-			zombie.getWorld().dropItemNaturally(zombie.getLocation(),
-					new ItemStack(Material.IRON_SWORD, (int) (Math.random() * 1.11)));
+		case Wolf e ->
+			e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.BONE_MEAL, 1 + r.nextInt(3)));
+		case Donkey e -> e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.CHEST));
+		case Llama e -> e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.WHITE_CARPET));
+		case Zombie e -> {
+			e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.ROTTEN_FLESH, 1));
+			e.getWorld().dropItemNaturally(e.getLocation(),
+					new ItemStack(Material.IRON_SWORD, r.nextInt(100) < 10 ? 1 : 0));
 		}
-		case Cod cod -> cod.getWorld().dropItemNaturally(cod.getLocation(),
-				new ItemStack(Material.COD, 1 + (int) (Math.random() * 3)));
-
-		case Salmon salmon -> salmon.getWorld().dropItemNaturally(salmon.getLocation(),
-				new ItemStack(Material.SALMON, 1 + (int) (Math.random() * 2)));
+		case Cod e -> {
+			if (r.nextBoolean())
+				e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.COD, 1));
+			else
+				e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.COD, 1));
+		}
+		case Salmon e -> {
+			if (r.nextBoolean())
+				e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.SALMON, 1));
+			else
+				e.getWorld().dropItemNaturally(e.getLocation(), new ItemStack(Material.SALMON, 1));
+		}
 		default -> {
 			return false;
 		}
